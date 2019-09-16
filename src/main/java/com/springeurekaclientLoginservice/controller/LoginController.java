@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import com.springeurekaclientLoginservice.dto.LoginDto;
+import com.springeurekaclientLoginservice.dto.LoginResponseDto;
+import com.springeurekaclientLoginservice.dto.ResponseDto;
 import com.springeurekaclientLoginservice.entity.LoginDetails;
 import com.springeurekaclientLoginservice.service.LoginService;
 
@@ -23,20 +25,19 @@ public class LoginController {
 	@Autowired
 	LoginService loginService;
 	
-	@GetMapping("/login")
-	public ResponseEntity authenticateLogin(@RequestBody LoginDto loginDto ) {
-		return null;
-		
-		
-	//	String response = restTemplate.exchange("http://student-service/getStudentDetailsForSchool/{schoolname}", HttpMethod.GET, null, new ParameterizedTypeReference<String>() {
-			
-		
+	@PostMapping("/login")
+
+	public ResponseEntity<LoginResponseDto> userLogin(@RequestBody LoginDto loginRequestDto){
+
+
+		return new ResponseEntity<>(loginService.userLogin(loginRequestDto),HttpStatus.OK);
+
 	}
 		
 		
 	@PostMapping("/saveLoginDetails")
-	public ResponseEntity<LoginDetails> saveLoginDetails(@RequestBody LoginDto loginDto ) {
-		return new ResponseEntity<>(loginService.saveLoginDetails(loginDto),HttpStatus.CREATED);
+	public ResponseEntity<ResponseDto> saveLoginDetails(@RequestBody LoginDto loginDto ) {
+		return new ResponseEntity<ResponseDto>(loginService.saveLoginDetails(loginDto),HttpStatus.CREATED);
 	}
 	
 
